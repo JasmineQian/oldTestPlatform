@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.bean.ApiCaseBean;
 import com.example.demo.bean.ApiInfoBean;
 import com.example.demo.bean.ApiVarBean;
+import com.example.demo.constant.message;
 import com.example.demo.service.ApiCaseService;
 import com.example.demo.service.ApiInfoService;
 import com.example.demo.service.ApiVarService;
@@ -44,13 +45,12 @@ public class ApiVar2CaseController {
         String body = null;
         for (int i = 0; i < list.size(); i++) {
             String var = list.get(i).getVal();
-            var = "请求中未传入" + var + "验证返回" + var + "~~更多断言";
+            String casename = "请求中未传入" + var + "验证返回code=" + message.ERROR_CODE_002 +"且"+var + message.ERROR_MESSAGE_002;
+            String assertion= var + message.ERROR_MESSAGE_002;
             System.out.println(var);
             StringBuffer sb = new StringBuffer();
             JSONObject jsonObject = new JSONObject();
             body = jsonObject.toString();
-
-
             for (int j = 0; j < list.size(); j++) {
                 if (list.get(i).getVal() != list.get(j).getVal()) {
                     jsonObject.put(list.get(j).getVal(),list.get(j).getValsample());
@@ -61,12 +61,11 @@ public class ApiVar2CaseController {
             System.out.println(body);
             ApiCaseBean apiCaseBean = new ApiCaseBean();
             apiCaseBean.setTaskid(taskid);
-            apiCaseBean.setName(var);
+            apiCaseBean.setName(casename);
             apiCaseBean.setBody(body);
-            apiCaseBean.setAsseertion(null);
+            apiCaseBean.setAsseertion(assertion);
             apiCaseBean.setPriorityid(3);
             apiCaseBean.setCasetype_id(1);
-
             int count = apiCaseService.add(apiCaseBean);
             System.out.println(count);
         }
@@ -90,7 +89,8 @@ public class ApiVar2CaseController {
         String body = null;
         for (int i = 0; i < list.size(); i++) {
             String var = list.get(i).getVal();
-            var = "请求中传入" + var + "为空字符串验证返回" + var + "~~更多断言";
+            String casename = "请求中未传入" + var + "为空验证返回code=" + message.ERROR_CODE_003 + "且" + var + message.ERROR_MESSAGE_003;
+            String assertion = var + message.ERROR_MESSAGE_003;
             System.out.println(var);
             StringBuffer sb = new StringBuffer();
             JSONObject jsonObject = new JSONObject();
@@ -108,9 +108,9 @@ public class ApiVar2CaseController {
             body = jsonObject.toString();
             ApiCaseBean apiCaseBean = new ApiCaseBean();
             apiCaseBean.setTaskid(taskid);
-            apiCaseBean.setName(var);
+            apiCaseBean.setName(casename);
             apiCaseBean.setBody(body);
-            apiCaseBean.setAsseertion(null);
+            apiCaseBean.setAsseertion(assertion);
             apiCaseBean.setPriorityid(3);
             apiCaseBean.setCasetype_id(2);
 
@@ -135,8 +135,8 @@ public class ApiVar2CaseController {
         for (int i = 0; i < list.size(); i++) {
             String var = list.get(i).getVal();
             int length = list.get(i).getInputLenght();
-            var = "请求中传入" + var + "的长度为" + length + "实际传入的长度为" + (length + 1) + "验证返回" + var + "~~更多断言";
-            System.out.println(var);
+            String casename = "请求中传入" + var + "的最大长度为" + length + "实际传入的长度为" + (length + 1) + "验证返回"+ message.ERROR_CODE_004 +"且"+var + message.ERROR_MESSAGE_004;
+            String assertion= var + message.ERROR_MESSAGE_004;
             StringBuffer sb = new StringBuffer();
 
             JSONObject jsonObject = new JSONObject();
@@ -147,7 +147,7 @@ public class ApiVar2CaseController {
                 max = list.get(j).getInputLenght();
                 sb = new StringBuffer("");
                 if (list.get(i).getVal() != list.get(j).getVal()) {
-                        sb.append(list.get(j).getValsample());
+                    sb.append(list.get(j).getValsample());
                 } else {
                     for (int k = 0; k <= max; k++) {
                         sb.append(ALLCHAR.charAt(random.nextInt(ALLCHAR.length())));
@@ -161,9 +161,9 @@ public class ApiVar2CaseController {
             body = jsonObject.toString();
             ApiCaseBean apiCaseBean = new ApiCaseBean();
             apiCaseBean.setTaskid(taskid);
-            apiCaseBean.setName(var);
+            apiCaseBean.setName(casename);
             apiCaseBean.setBody(body);
-            apiCaseBean.setAsseertion(null);
+            apiCaseBean.setAsseertion(assertion);
             apiCaseBean.setPriorityid(3);
             apiCaseBean.setCasetype_id(3);
 
